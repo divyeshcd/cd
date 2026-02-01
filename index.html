@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>❤️ Valentine?</title>
+  <style>
+    body {
+      background-color: #ffe6f0;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    .box {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    h1 {
+      color: #ff3366;
+    }
+    button {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      background-color: #ff3366;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e62e5c;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box" id="content">
+    <h1>Will you be my Valentine? 💖</h1>
+    <button onclick="yesClicked()">YES ❤️</button>
+  </div>
+
+  <script>
+    function yesClicked() {
+      document.getElementById("content").innerHTML = `
+        <h1>YAYYY!! 🥰💘</h1>
+        <p>You just made my day ❤️</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
