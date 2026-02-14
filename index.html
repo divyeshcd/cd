@@ -2,119 +2,237 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For My Forever ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Forever ❤️</title>
 
 <style>
 body {
-  margin: 0;
-  height: 100vh;
-  background: black;
-  color: white;
-  font-family: 'Arial', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+  margin:0;
+  background:black;
+  color:white;
+  font-family:Arial, sans-serif;
+  overflow:hidden;
 }
 
-.container {
-  text-align: center;
-  max-width: 600px;
+/* INTRO */
+.intro {
+  position:absolute;
+  width:100%;
+  top:40%;
+  text-align:center;
+  font-size:28px;
+  opacity:0;
+  animation:fadeIn 3s forwards;
 }
 
-.line {
-  opacity: 0;
-  font-size: 22px;
-  margin: 15px 0;
-  transition: opacity 2s ease;
+@keyframes fadeIn { to {opacity:1;} }
+
+/* TYPING */
+.typing {
+  position:absolute;
+  top:55%;
+  width:100%;
+  text-align:center;
+  font-size:24px;
+  border-right:2px solid white;
+  white-space:nowrap;
+  overflow:hidden;
 }
 
+/* SLIDESHOW */
+.slideshow {
+  display:none;
+  width:100%;
+  height:100vh;
+  position:relative;
+}
+
+.slide {
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transform:scale(1);
+  transition:opacity 2s ease-in-out, transform 8s ease-in-out;
+}
+
+.active {
+  opacity:1;
+  transform:scale(1.1); /* SOFT ZOOM */
+}
+
+/* OVERLAY TEXT */
+.overlay {
+  position:absolute;
+  bottom:80px;
+  width:100%;
+  text-align:center;
+  font-size:20px;
+  background:rgba(0,0,0,0.4);
+  padding:10px 0;
+}
+
+/* COUNTDOWN */
+.countdown {
+  position:absolute;
+  bottom:20px;
+  width:100%;
+  text-align:center;
+  font-size:16px;
+  background:rgba(0,0,0,0.4);
+  padding:8px 0;
+}
+
+/* SURPRISE SCREEN */
+.surprise {
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  font-size:28px;
+  display:none;
+}
+
+/* BUTTON */
 button {
-  padding: 15px 30px;
-  font-size: 18px;
-  border-radius: 30px;
-  border: none;
-  background: #ff3366;
-  color: white;
-  cursor: pointer;
-  margin-top: 25px;
-  display: none;
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  font-size:16px;
+  background:#ff3366;
+  color:white;
+  cursor:pointer;
+  margin-top:20px;
 }
 
-img {
-  width: 250px;
-  margin-top: 20px;
-  opacity: 0;
-  transition: opacity 2s ease;
-}
-
+/* HEARTS */
 .heart {
-  position: absolute;
-  color: red;
-  font-size: 20px;
-  animation: float 4s linear infinite;
+  position:absolute;
+  color:red;
+  animation:float 5s linear infinite;
 }
 
 @keyframes float {
-  0% { transform: translateY(0); opacity:1;}
-  100% { transform: translateY(-500px); opacity:0;}
+  0% { transform:translateY(0); opacity:1;}
+  100% { transform:translateY(-600px); opacity:0;}
 }
 </style>
 </head>
 
-<body>
+<body onclick="startExperience()">
 
-<audio autoplay loop>
+<audio id="bgMusic" loop preload="auto">
   <source src="music.mp3" type="audio/mp3">
 </audio>
 
-<div class="container">
-  <div class="line" id="l1">Today is Valentine’s Day… ❤️</div>
-  <div class="line" id="l2">But loving you is not just for today.</div>
-  <div class="line" id="l3">It’s for every morning I wake up next to you.</div>
-    <img src="love.gif" id="gif">
+<div class="intro" id="introText">
+  A Story Written by Divyesh ✍️❤️
+</div>
 
-  <button id="finalBtn" onclick="finale()">Will you choose me again? 💍</button>
+<div class="typing" id="typingText"></div>
+
+<div class="slideshow" id="slideshow">
+  <img src="photo1.jpeg" class="slide active">
+  <img src="photo2.jpeg" class="slide">
+  <img src="photo3.jpeg" class="slide">
+  <img src="photo4.jpeg" class="slide">
+
+  <div class="overlay">
+    Chainika ❤️ Divyesh
+  </div>
+
+  <div class="countdown" id="countdown"></div>
+
+  <button onclick="showSurprise()">Tap for Surprise 💍</button>
+</div>
+
+<div class="surprise" id="surpriseScreen">
+  <div>
+    Forever with you 🥰💖<br><br>
+  </div>
 </div>
 
 <script>
-const lines = ["l1","l2","l3","l4","l5"];
-let delay = 1000;
 
-lines.forEach((id, index) => {
-  setTimeout(() => {
-    document.getElementById(id).style.opacity = 1;
-  }, delay * (index + 1));
-});
+let started = false;
 
-setTimeout(() => {
-  document.getElementById("gif").style.opacity = 1;
-}, 6500);
+function startExperience(){
+  if(started) return;
+  started = true;
 
-setTimeout(() => {
-  document.getElementById("finalBtn").style.display = "inline-block";
-}, 8500);
+  document.getElementById("bgMusic").play();
 
-function finale() {
-  document.body.innerHTML = `
-    <div style="text-align:center;">
-      <h1 style="font-size:40px;">Forever with you 🥰❤️</h1>
-      <p style="font-size:
-    </div>
-  `;
+  const nameText = "Simran… You Are My Forever 💖";
+  let i = 0;
+
+  function typeWriter() {
+    if (i < nameText.length) {
+      document.getElementById("typingText").innerHTML += nameText.charAt(i);
+      i++;
+      setTimeout(typeWriter, 80);
+    } else {
+      setTimeout(startSlideshow,2000);
+    }
+  }
+
+  typeWriter();
+}
+
+function startSlideshow(){
+  document.getElementById("introText").style.display="none";
+  document.getElementById("typingText").style.display="none";
+  document.getElementById("slideshow").style.display="block";
+
+  let slides = document.querySelectorAll(".slide");
+  let index = 0;
+
+  setInterval(()=>{
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+  }, 5000);
+}
+
+/* COUNTDOWN */
+const foreverDate = new Date("February 14, 2050 00:00:00").getTime();
+
+setInterval(()=>{
+  const now = new Date().getTime();
+  const distance = foreverDate - now;
+
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+
+  document.getElementById("countdown").innerHTML =
+  "Countdown to Forever 💍: " + days + " days " + hours + " hrs " + minutes + " mins";
+},1000);
+
+/* SURPRISE */
+function showSurprise(){
+  document.getElementById("slideshow").style.display="none";
+  document.getElementById("surpriseScreen").style.display="flex";
   createHearts();
 }
 
+/* HEART EFFECT */
 function createHearts(){
-  for(let i=0;i<50;i++){
+  setInterval(()=>{
     const heart=document.createElement("div");
     heart.className="heart";
     heart.style.left=Math.random()*100+"%";
     heart.style.fontSize=(10+Math.random()*30)+"px";
     heart.innerHTML="❤️";
     document.body.appendChild(heart);
-  }
+    setTimeout(()=>heart.remove(),5000);
+  },300);
 }
+
 </script>
 
 </body>
