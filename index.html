@@ -1,67 +1,227 @@
-<div class="slideshow" id="slideshow">
-  <img src="1.webp" class="slide active">
-  <img src="2.webp" class="slide">
-  <img src="3.webp" class="slide">
-  <img src="4.webp" class="slide">
-  <img src="5.webp" class="slide">
-  <img src="6.webp" class="slide">
-  <img src="7.webp" class="slide">
-  <img src="8.webp" class="slide">
-  <img src="9.webp" class="slide">
-  <img src="10.webp" class="slide">
-  <img src="11.webp" class="slide">
-  <img src="12.webp" class="slide">
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Something Special ❤️</title>
+
+<style>
+body{
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  background:black;
+  font-family: 'Segoe UI', sans-serif;
+  color:white;
+}
+
+/* INTRO SCREEN */
+#intro{
+  position:fixed;
+  width:100%;
+  height:100vh;
+  background:black;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+}
+
+#intro h1{
+  font-size:38px;
+  text-align:center;
+  animation:fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+/* Floating hearts */
+.heart{
+  position:absolute;
+  color:#ff4d6d;
+  font-size:20px;
+  animation:float 6s linear infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh); opacity:1;}
+  100%{transform:translateY(-10vh); opacity:0;}
+}
+
+#startBtn{
+  display:none;
+  margin-top:40px;
+  padding:12px 30px;
+  font-size:18px;
+  border:none;
+  border-radius:25px;
+  background:#ff3366;
+  color:white;
+  cursor:pointer;
+}
+
+/* SLIDESHOW */
+#slideshow{
+  display:none;
+  position:relative;
+  width:100%;
+  height:100vh;
+}
+
+.slide{
+  position:absolute;
+  width:100%;
+  height:100vh;
+  object-fit:cover;
+  opacity:0;
+  filter:blur(15px);
+  transform:scale(1);
+  transition:
+    opacity 1.8s ease-in-out,
+    filter 1.8s ease-in-out,
+    transform 8s ease-in-out;
+}
+
+.slide.active{
+  opacity:1;
+  filter:blur(0);
+  transform:scale(1.08);
+}
+
+.overlay{
+  position:absolute;
+  bottom:120px;
+  width:100%;
+  text-align:center;
+  font-size:32px;
+  background:rgba(0,0,0,0.55);
+  padding:25px;
+  min-height:100px;
+}
+
+#nextBtn{
+  position:absolute;
+  bottom:40px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:12px 25px;
+  font-size:18px;
+  border:none;
+  border-radius:25px;
+  background:#ff3366;
+  color:white;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <h1>Chunnu… something special is coming… ❤️✨</h1>
+  <button id="startBtn">Start the Magic 💖</button>
+</div>
+
+<!-- SLIDESHOW -->
+<div id="slideshow">
+  <img src="images/1.jpg" class="slide">
+  <img src="images/2.jpg" class="slide">
+  <img src="images/3.jpg" class="slide">
+  <img src="images/4.jpg" class="slide">
+  <img src="images/5.jpg" class="slide">
+  <img src="images/6.jpg" class="slide">
+  <img src="images/7.jpg" class="slide">
+  <img src="images/8.jpg" class="slide">
+  <img src="images/9.jpg" class="slide">
+  <img src="images/10.jpg" class="slide">
+  <img src="images/11.jpg" class="slide">
+  <img src="images/12.jpg" class="slide">
+
   <div class="overlay" id="slideText"></div>
   <button id="nextBtn">Next ➡️</button>
 </div>
 
 <script>
-const slides = document.querySelectorAll(".slide");
+
+/* Floating Hearts */
+for(let i=0;i<30;i++){
+  let heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"%";
+  heart.style.animationDuration=(4+Math.random()*3)+"s";
+  document.body.appendChild(heart);
+}
+
+/* Show Start Button after 5 sec */
+setTimeout(()=>{
+  document.getElementById("startBtn").style.display="block";
+},5000);
+
+document.getElementById("startBtn").onclick=function(){
+  document.getElementById("intro").style.display="none";
+  document.getElementById("slideshow").style.display="block";
+  showSlide(0);
+};
+
+/* SLIDES */
 const slideTexts = [
-  "The moment I saw you, I knew my life just got way too interesting 😍✨",
-  "Saying bye to you was unfair… my heart filed a complaint 💔",
-  "We laughed so much that I think we created a small earthquake 🌍🤣",
-  "Goa never saw a crazier duo… and I’m still trying to recollect 'bachao bachao' at the beach 🏖️😜",
-  "Back to Bhopal… only this time I stole more than just your fries 🍟❤️",
-  "I realized wearing ethnic together feel romantic 💘",
-  "Up the hills, down our hearts… and I still remember you getting super duper happy at cheese factory ⛰️",
-  "The weather was super hot but your smile outshone everything ✨😎",
-  "Road trip rule: if you’re laughing too hard, you’re officially my soulmate 🚗💓",
-  "Tipsy night at TOIT 🍻❤️",
-  "Delhi streets, Delhi food… and me hopelessly lost in your eyes 😍",
-  "Our last trip, our last dinner date as boyfriend and girlfriend… and I laughed, I loved, I lived every second with you 😘❤️🍷"
+"The moment I saw you in Bhopal… I knew my life just got dangerously interesting 😍✨",
+"Saying bye after our first meeting felt illegal… my heart filed a complaint 💔",
+"Noida trip part two… we laughed so much I think we caused minor tremors 🌍🤣",
+"Goa road trip… and I still remember your dramatic 'bachao bachao' at the beach 🏖️😜",
+"Back to Bhopal… only this time I stole more than just your fries 🍟❤️",
+"In Thane, I realized wearing ethnic together feels criminally romantic 💘",
+"Mahabaleshwar hills… and you getting super excited at the cheese factory was the cutest thing ever ⛰️🧀",
+"Amritsar heat couldn’t compete… your smile outshone the sun itself ☀️✨",
+"Bangalore road trip rule: if we’re laughing nonstop, we’re soulmates confirmed 🚗💓",
+"One of those Bangalore nights… slightly tipsy, fully in love, zero regrets 🍻❤️",
+"Delhi streets, Delhi food… and me completely lost in your eyes 😍",
+"Alibaug… our last trip as girlfriend and boyfriend… waves were loud, but my heart was louder that night 🌊💍"
 ];
 
-let currentIndex = 0;
+const slides = document.querySelectorAll(".slide");
 const slideTextDiv = document.getElementById("slideText");
 const nextBtn = document.getElementById("nextBtn");
+let currentIndex = 0;
+
+/* Typing Effect */
+function typeWriter(text, element, speed = 40) {
+  element.innerHTML = "";
+  let i = 0;
+  function typing(){
+    if(i < text.length){
+      element.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, speed);
+    }
+  }
+  typing();
+}
 
 function showSlide(index){
-  slides.forEach((slide,i)=>slide.classList.remove("active"));
+  slides.forEach(slide=>slide.classList.remove("active"));
   slides[index].classList.add("active");
-  slideTextDiv.innerHTML = slideTexts[index];
+
+  typeWriter(slideTexts[index], slideTextDiv);
 
   if(index === slides.length-1){
-    nextBtn.style.display="none";
-    const surpriseBtn = document.createElement("button");
-    surpriseBtn.innerText = "Tap for Surprise 💍";
-    surpriseBtn.onclick = showSurprise;
-    slideTextDiv.appendChild(document.createElement("br"));
-    slideTextDiv.appendChild(surpriseBtn);
+    nextBtn.innerText="Tap for Surprise 💍";
+    nextBtn.onclick=()=>alert("Forever with you ❤️");
   } else {
-    nextBtn.style.display="inline-block";
+    nextBtn.innerText="Next ➡️";
+    nextBtn.onclick=()=>{
+      currentIndex++;
+      showSlide(currentIndex);
+    }
   }
 }
 
-nextBtn.addEventListener("click", ()=>{
-  currentIndex++;
-  showSlide(currentIndex);
-});
-
-function showSurprise(){
-  alert("I LOVE YOU! ❤️"); // replace with your cinematic surprise function
-}
-
-// initialize first slide
-showSlide(currentIndex);
 </script>
+
+</body>
+</html>
