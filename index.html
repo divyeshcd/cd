@@ -7,297 +7,232 @@
 <style>
 body{
   margin:0;
+  font-family: 'Segoe UI', sans-serif;
   overflow:hidden;
-  font-family:Arial,sans-serif;
-  background:black;
-  color:white;
 }
 
-/* ================= INTRO ================= */
+/* ===== INTRO SECTION ===== */
 
 #intro{
   position:fixed;
   width:100%;
   height:100vh;
+  background:linear-gradient(45deg,#ff4e8a,#ff7eb3);
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(45deg,#ff3366,#ff6699);
+  color:white;
   z-index:9999;
+  text-align:center;
 }
 
 #intro h1{
-  font-size:40px;
-  text-align:center;
+  font-size:32px;
   animation:fadeIn 2s ease-in-out;
 }
 
 #startBtn{
-  margin-top:30px;
-  padding:15px 30px;
+  margin-top:40px;
+  padding:15px 35px;
   font-size:18px;
   border:none;
   border-radius:30px;
   background:white;
-  color:#ff3366;
+  color:#ff4e8a;
   cursor:pointer;
   opacity:0;
   transition:opacity 1s ease;
 }
 
-/* Floating Hearts */
-.heart{
-  position:absolute;
-  color:white;
-  animation:float 6s linear infinite;
-  font-size:24px;
-}
-
-@keyframes float{
-  0%{ transform:translateY(100vh) scale(0.5); opacity:1;}
-  100%{ transform:translateY(-10vh) scale(1.2); opacity:0;}
-}
-
-@keyframes fadeIn{
-  from{opacity:0;}
-  to{opacity:1;}
-}
-
-/* ================= SLIDESHOW ================= */
+/* ===== SLIDESHOW ===== */
 
 #slideshow{
-  position:absolute;
-  width:100%;
-  height:100vh;
   display:none;
+  height:100vh;
+  width:100%;
+  position:relative;
+  background:black;
+  color:white;
+  text-align:center;
 }
 
 .slide{
   position:absolute;
   width:100%;
-  height:100vh;
-  object-fit:cover;
-  opacity:0;
-  filter:blur(15px);
-  transform:scale(1);
-  transition:
-    opacity 1.8s ease-in-out,
-    filter 1.8s ease-in-out,
-    transform 8s ease-in-out;
+  height:100%;
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
-.slide.active{
-  opacity:1;
-  filter:blur(0);
-  transform:scale(1.08);
+.slide img{
+  max-height:60%;
+  max-width:80%;
+  border-radius:15px;
 }
 
-.overlay{
-  position:absolute;
-  bottom:120px;
-  width:100%;
-  text-align:center;
-  font-size:32px;
-  background:rgba(0,0,0,0.6);
-  padding:25px;
-  min-height:80px;
+.message{
+  margin-top:20px;
+  font-size:22px;
+  width:80%;
 }
 
 /* Navigation Buttons */
-#prevBtn, #nextBtn{
+
+.navBtn{
   position:absolute;
-  bottom:40px;
-  padding:12px 25px;
-  font-size:18px;
+  bottom:30px;
+  padding:10px 25px;
+  font-size:16px;
   border:none;
-  border-radius:25px;
-  background:#ff3366;
-  color:white;
+  border-radius:20px;
   cursor:pointer;
 }
 
-#prevBtn{ left:30%; transform:translateX(-50%); }
-#nextBtn{ left:70%; transform:translateX(-50%); }
-
-/* Final Question */
-#finalQuestion{
-  display:none;
-  position:absolute;
-  bottom:50px;
-  width:100%;
-  text-align:center;
+#prevBtn{
+  left:30px;
 }
 
-#finalQuestion button{
-  padding:12px 25px;
-  font-size:18px;
-  border:none;
-  border-radius:25px;
-  cursor:pointer;
-  margin:0 15px;
+#nextBtn{
+  right:30px;
 }
 
-#yesBtn{ background:#ff3366; color:white; }
-#noBtn{ background:#555; color:white; position:relative; }
+/* Fade animation */
 
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
 </style>
 </head>
+
 <body>
 
-<!-- ================= INTRO ================= -->
+<!-- INTRO -->
 <div id="intro">
   <h1>Chunnu… something special is coming ❤️</h1>
   <button id="startBtn">Start Our Story ✨</button>
 </div>
 
-<!-- ================= SLIDESHOW ================= -->
+<!-- SLIDESHOW -->
 <div id="slideshow">
 
-  <img src="1.webp" class="slide">
-  <img src="2.webp" class="slide">
-  <img src="3.webp" class="slide">
-  <img src="4.webp" class="slide">
-  <img src="5.webp" class="slide">
-  <img src="6.webp" class="slide">
-  <img src="7.webp" class="slide">
-  <img src="8.webp" class="slide">
-  <img src="9.webp" class="slide">
-  <img src="10.webp" class="slide">
-  <img src="11.webp" class="slide">
-  <img src="12.webp" class="slide">
-
-  <div class="overlay" id="slideText"></div>
-
-  <button id="prevBtn">⬅️ Previous</button>
-  <button id="nextBtn">Next ➡️</button>
-
-  <div id="finalQuestion">
-    <h2>Did you like it???</h2>
-    <button id="yesBtn">Yes ❤️</button>
-    <button id="noBtn">No 😅</button>
+  <div class="slide">
+    <img src="1.webp">
+    <div class="message">The moment I saw you, my life got dangerously interesting 😍</div>
   </div>
+
+  <div class="slide">
+    <img src="2.webp">
+    <div class="message">Saying bye to you was unfair… my heart filed a complaint 💔</div>
+  </div>
+
+  <div class="slide">
+    <img src="3.webp">
+    <div class="message">We laughed so much that I think we created a small earthquake 🌍🤣</div>
+  </div>
+
+  <div class="slide">
+    <img src="4.webp">
+    <div class="message">Goa never saw a crazier duo… and I’m still laughing at 'BACHAO..BACHAO..' at the beach 🏖️😜</div>
+  </div>
+
+  <div class="slide">
+    <img src="5.webp">
+    <div class="message">Back to Bhopal… only this time I stole more than just your fries 🍟❤️</div>
+  </div>
+
+  <div class="slide">
+    <img src="6.webp">
+    <div class="message">This memory made me realize we don’t just look good together… we’re basically a limited-edition combo pack made for each other 😌✨</div>
+  </div>
+
+  <div class="slide">
+    <img src="7.webp">
+    <div class="message">Up the hills, down our hearts… and you getting super happy at the cheese factory ⛰️🧀</div>
+  </div>
+
+  <div class="slide">
+    <img src="8.webp">
+    <div class="message">The weather was super hot but your smile outshone everything ✨😎</div>
+  </div>
+
+  <div class="slide">
+    <img src="9.webp">
+    <div class="message">The longest road trip ever… proof that we can handle highways, wrong turns, and still not get tired of each other.</div>
+  </div>
+
+  <div class="slide">
+    <img src="10.webp">
+    <div class="message">One of those slightly tipsy nights where love looked extra cute 🍻❤️</div>
+  </div>
+
+  <div class="slide">
+    <img src="11.webp">
+    <div class="message">Delhi streets, Delhi food… and me hopelessly lost in your eyes 😍</div>
+  </div>
+
+  <div class="slide">
+    <img src="12.webp">
+    <div class="message">Our last trip and last romantic dinner as girlfriend & boyfriend… but definitely not our last forever ❤️</div>
+  </div>
+  <button class="navBtn" id="prevBtn">Previous</button>
+  <button class="navBtn" id="nextBtn">Next</button>
 
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
+window.onload = function(){
 
-/* Floating hearts */
-function createHeart(){
-  const heart=document.createElement("div");
-  heart.classList.add("heart");
-  heart.innerHTML="❤️";
-  heart.style.left=Math.random()*100+"%";
-  heart.style.animationDuration=(Math.random()*3+3)+"s";
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),6000);
-}
-setInterval(createHeart,500);
+const startBtn = document.getElementById("startBtn");
+const intro = document.getElementById("intro");
+const slideshow = document.getElementById("slideshow");
+const slides = document.querySelectorAll(".slide");
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
 
-/* Elements */
-const intro=document.getElementById("intro");
-const startBtn=document.getElementById("startBtn");
-const slideshow=document.getElementById("slideshow");
-const slides=document.querySelectorAll(".slide");
-const slideTextDiv=document.getElementById("slideText");
-const prevBtn=document.getElementById("prevBtn");
-const nextBtn=document.getElementById("nextBtn");
-const finalQuestion=document.getElementById("finalQuestion");
-const yesBtn=document.getElementById("yesBtn");
-const noBtn=document.getElementById("noBtn");
+let current = 0;
 
-let currentIndex=0;
-
-/* Show start button after 5 seconds */
+/* Show button after 5 seconds */
 setTimeout(function(){
-  startBtn.style.opacity="1";
-},5000);
+  startBtn.style.opacity = "1";
+}, 5000);
 
-/* Start button click */
-startBtn.addEventListener("click", function(){
-  intro.style.display="none";
-  slideshow.style.display="block";
-  showSlide(currentIndex);
-});
+/* Start slideshow */
+startBtn.onclick = function(){
+  intro.style.display = "none";
+  slideshow.style.display = "block";
+  showSlide(current);
+};
 
-/* Slide texts */
-const slideTexts=[
-"The moment I saw you, I knew my life just got way too interesting 😍✨",
-"Saying bye to you was unfair… my heart filed a complaint 💔",
-"We laughed so much that I think we created a small earthquake 🌍🤣",
-"Goa never saw a crazier duo… and I’m still laughing at 'BACHAO..BACHAO..' at the beach 🏖️😜",
-"Back to Bhopal… only this time I stole more than just your fries 🍟❤️",
-"This memory made me realize we don’t just look good together… we’re basically a limited-edition combo pack made for each other 😌✨",
-"Up the hills, down our hearts… and you getting super happy at the cheese factory ⛰️🧀",
-"The weather was super hot but your smile outshone everything ✨😎",
-"The longest road trip ever… proof that we can handle highways, wrong turns, and still not get tired of each other.",
-"One of those slightly tipsy nights where love looked extra cute 🍻❤️",
-"Delhi streets, Delhi food… and me hopelessly lost in your eyes 😍",
-"Our last trip and last romantic dinner as girlfriend & boyfriend… but definitely not our last forever ❤️"
-];
-
-/* Typing effect */
-function typeWriter(text, element, speed=40){
-  element.innerHTML="";
-  let i=0;
-  function typing(){
-    if(i<text.length){
-      element.innerHTML+=text.charAt(i);
-      i++;
-      setTimeout(typing,speed);
-    }
-  }
-  typing();
-}
-
-/* Show slide */
+/* Show slide function */
 function showSlide(index){
-  slides.forEach(slide=>slide.classList.remove("active"));
-  slides[index].classList.add("active");
-  typeWriter(slideTexts[index],slideTextDiv);
+  slides.forEach(slide => slide.style.display = "none");
+  slides[index].style.display = "flex";
 
-  if(index===slides.length-1){
-    nextBtn.style.display="none";
-    finalQuestion.style.display="block";
-  }else{
-    nextBtn.style.display="inline-block";
-    finalQuestion.style.display="none";
-  }
-
-  prevBtn.style.display=(index===0)?"none":"inline-block";
+  prevBtn.style.display = index === 0 ? "none" : "block";
+  nextBtn.style.display = index === slides.length - 1 ? "none" : "block";
 }
 
-/* Navigation */
-prevBtn.addEventListener("click", function(){
-  if(currentIndex>0){
-    currentIndex--;
-    showSlide(currentIndex);
+/* Next */
+nextBtn.onclick = function(){
+  if(current < slides.length - 1){
+    current++;
+    showSlide(current);
   }
-});
+};
 
-nextBtn.addEventListener("click", function(){
-  if(currentIndex<slides.length-1){
-    currentIndex++;
-    showSlide(currentIndex);
+/* Previous */
+prevBtn.onclick = function(){
+  if(current > 0){
+    current--;
+    showSlide(current);
   }
-});
+};
 
-/* Yes click */
-yesBtn.addEventListener("click", function(){
-  alert("Yay! ❤️ You made my day!");
-});
-
-/* No button runs away */
-noBtn.addEventListener("mouseover", function(){
-  const maxX=window.innerWidth-100;
-  const maxY=window.innerHeight-50;
-  noBtn.style.position="absolute";
-  noBtn.style.left=Math.random()*maxX+"px";
-  noBtn.style.top=Math.random()*maxY+"px";
-});
-
-});
+};
 </script>
 
 </body>
