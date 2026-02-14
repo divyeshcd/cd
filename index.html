@@ -13,7 +13,7 @@ body {
   color:white;
 }
 
-/* Vignette effect */
+/* Vignette */
 body::after {
   content:"";
   position:fixed;
@@ -26,18 +26,17 @@ body::after {
   z-index:3;
 }
 
-/* Intro */
-.intro {
+/* Intro Animation */
+#introAnimation {
   position:absolute;
-  width:100%;
-  top:40%;
-  text-align:center;
-  font-size:28px;
-  opacity:0;
-  animation:fadeIn 3s forwards;
-  z-index:4;
+  width:100%; height:100%;
+  display:flex; justify-content:center; align-items:center; flex-direction:column;
+  background:black; z-index:10;
+  overflow:hidden;
 }
-@keyframes fadeIn { to {opacity:1;} }
+#introTextAnim {
+  font-size:28px; color:white; text-align:center;
+}
 
 /* Slideshow */
 .slideshow {
@@ -88,7 +87,7 @@ body::after {
   z-index:4;
 }
 
-/* Surprise screen */
+/* Surprise Screen */
 .surprise {
   position:absolute;
   width:100%;
@@ -127,18 +126,19 @@ button {
 }
 </style>
 </head>
-<body onclick="startExperience()">
+<body>
 
 <audio id="bgMusic" loop preload="auto">
   <source src="music.mp3" type="audio/mp3">
 </audio>
 
-<div class="intro" id="introText">
-  A Story Written by Divyesh ✍️❤️
+<!-- Intro Animation -->
+<div id="introAnimation">
+  <div id="introTextAnim">Chunnu… something special is coming ❤️</div>
 </div>
 
+<!-- Slideshow -->
 <div class="slideshow" id="slideshow">
-  <!-- 12 images with lazy loading -->
   <img data-src="1.webp" class="slide active">
   <img data-src="2.webp" class="slide">
   <img data-src="3.webp" class="slide">
@@ -153,7 +153,7 @@ button {
   <img data-src="12.webp" class="slide">
 
   <div class="overlay">
-    Chainika ❤️ Divyesh<br>
+    Divyesh ❤️ Divyesh<br>
     Every moment. Every memory. Forever.
     <br>
     <button onclick="showSurprise()">Tap for Surprise 💍</button>
@@ -162,38 +162,36 @@ button {
   <div class="countdown" id="countdown"></div>
 </div>
 
+<!-- Surprise -->
 <div class="surprise" id="surpriseScreen">
-  Forever with you 🥰💖<br><br>
+  Forever with you 🥰💖
 </div>
 
 <script>
 let started = false;
 
+// Intro animation and lazy loading
 function startExperience(){
   if(started) return;
   started = true;
 
-  // Play music (user interaction safe)
+  const slides = document.querySelectorAll(".slide");
+  slides.forEach(slide => { slide.src = slide.dataset.src; }); // lazy load
+
   document.getElementById("bgMusic").play();
 
-  // Preload images
-  const slides = document.querySelectorAll(".slide");
-  slides.forEach(slide => {
-    slide.src = slide.dataset.src;
-  });
-
-  // Fade intro then show slideshow
+  // Hide intro after 3s and start slideshow
   setTimeout(()=>{
-    document.getElementById("introText").style.display="none";
+    document.getElementById("introAnimation").style.display="none";
     document.getElementById("slideshow").style.display="block";
     startSlideshow();
   },3000);
 }
 
+// Start slideshow with smooth fade + soft zoom
 function startSlideshow(){
   const slides = document.querySelectorAll(".slide");
   let index = 0;
-
   setInterval(()=>{
     slides[index].classList.remove("active");
     index = (index + 1) % slides.length;
@@ -201,7 +199,7 @@ function startSlideshow(){
   },5000);
 }
 
-/* Countdown */
+// Countdown to forever
 const foreverDate = new Date("February 14, 2050 00:00:00").getTime();
 setInterval(()=>{
   const now = new Date().getTime();
@@ -213,25 +211,50 @@ setInterval(()=>{
     "Countdown to Forever 💍: " + days + " days " + hours + " hrs " + minutes + " mins";
 },1000);
 
-/* Surprise */
+// Show surprise screen with hearts
 function showSurprise(){
   document.getElementById("slideshow").style.display="none";
   document.getElementById("surpriseScreen").style.display="flex";
   createHearts();
 }
 
-/* Hearts effect */
 function createHearts(){
   setInterval(()=>{
-    const heart=document.createElement("div");
-    heart.className="heart";
-    heart.style.left=Math.random()*100+"%";
-    heart.style.fontSize=(10+Math.random()*30)+"px";
-    heart.innerHTML="❤️";
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.style.left = Math.random()*100+"%";
+    heart.style.fontSize = (10+Math.random()*30)+"px";
+    heart.innerHTML = "❤️";
     document.body.appendChild(heart);
     setTimeout(()=>heart.remove(),5000);
   },300);
 }
+
+// Trigger intro animation on page load
+window.onload = function() {
+  // Create floating hearts for intro
+  const introDiv = document.getElementById("introAnimation");
+  for(let i=0;i<30;i++){
+    const heart = document.createElement("div");
+    heart.innerHTML="❤️";
+    heart.style.position="absolute";
+    heart.style.fontSize=(10+Math.random()*30)+"px";
+    heart.style.left=Math.random()*100+"%";
+    heart.style.top="100%";
+    heart.style.animation="float 3s linear forwards";
+    introDiv.appendChild(heart);
+  }
+  startExperience();
+}
+
+// Floating hearts animation keyframes
+const style = document.createElement('style');
+style.innerHTML = `
+@keyframes float {
+  0% {transform: translateY(0); opacity:1;}
+  100% {transform: translateY(-500px); opacity:0;}
+}`;
+document.head.appendChild(style);
 </script>
 </body>
 </html>
