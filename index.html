@@ -3,127 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> Our Forever ❤️</title>
+<title>Our Forever ❤️</title>
 <style>
-body {
-  margin:0;
-  background:black;
-  overflow:hidden;
-  font-family:Arial, sans-serif;
-  color:white;
-}
+body { margin:0; background:black; overflow:hidden; font-family:Arial, sans-serif; color:white; }
+body::after { content:""; position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none;
+  background:radial-gradient(circle at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 100%); z-index:3; }
 
-/* Vignette */
-body::after {
-  content:"";
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  pointer-events:none;
-  background:radial-gradient(circle at center,
-    rgba(0,0,0,0) 40%,
-    rgba(0,0,0,0.6) 100%);
-  z-index:3;
-}
+#introAnimation { position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center; flex-direction:column; background:black; z-index:10; overflow:hidden; }
+#introTextAnim { font-size:28px; color:white; text-align:center; }
 
-/* Intro Animation */
-#introAnimation {
-  position:absolute;
-  width:100%; height:100%;
-  display:flex; justify-content:center; align-items:center; flex-direction:column;
-  background:black; z-index:10;
-  overflow:hidden;
-}
-#introTextAnim {
-  font-size:40px; color:white; text-align:center;
-}
+.slideshow { display:none; width:100%; height:100vh; position:relative; }
+.slide { position:absolute; width:100%; height:100%; object-fit:cover; opacity:0; transform:scale(1); filter:blur(8px);
+  transition:opacity 2s ease-in-out, transform 8s ease-in-out, filter 2s ease-in-out; }
+.active { opacity:1; transform:scale(1.1); filter:blur(0); }
 
-/* Slideshow */
-.slideshow {
-  display:none;
-  width:100%;
-  height:100vh;
-  position:relative;
-}
-.slide {
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  opacity:0;
-  transform:scale(1);
-  filter:blur(8px);
-  transition:opacity 2s ease-in-out, transform 8s ease-in-out, filter 2s ease-in-out;
-}
-.active {
-  opacity:1;
-  transform:scale(1.1);
-  filter:blur(0);
-}
+.overlay { position:absolute; bottom:90px; width:100%; text-align:center; font-size:20px; padding:15px 0; background:rgba(0,0,0,0.45); backdrop-filter:blur(6px); z-index:4; }
 
-/* Text overlay */
-.overlay {
-  position:absolute;
-  bottom:90px;
-  width:100%;
-  text-align:center;
-  font-size:20px;
-  padding:15px 0;
-  background:rgba(0,0,0,0.45);
-  backdrop-filter:blur(6px);
-  z-index:4;
-}
+button { padding:12px 25px; border:none; border-radius:25px; font-size:16px; background:#ff3366; color:white; cursor:pointer; margin-top:15px; }
 
-/* Countdown */
-.countdown {
-  position:absolute;
-  bottom:20px;
-  width:100%;
-  text-align:center;
-  font-size:16px;
-  background:rgba(0,0,0,0.45);
-  backdrop-filter:blur(6px);
-  padding:10px 0;
-  z-index:4;
-}
+.surprise { position:absolute; width:100%; height:100%; background:black; display:none; justify-content:center; align-items:center; flex-direction:column; font-size:28px; z-index:5; }
 
-/* Surprise Screen */
-.surprise {
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:black;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  font-size:28px;
-  z-index:5;
-}
-
-/* Button */
-button {
-  padding:12px 25px;
-  border:none;
-  border-radius:25px;
-  font-size:16px;
-  background:#ff3366;
-  color:white;
-  cursor:pointer;
-  margin-top:15px;
-}
-
-/* Hearts */
-.heart {
-  position:absolute;
-  color:red;
-  animation:float 5s linear infinite;
-  z-index:6;
-}
-@keyframes float {
-  0% { transform:translateY(0); opacity:1;}
-  100% { transform:translateY(-600px); opacity:0;}
-}
+.heart { position:absolute; color:red; animation:float 5s linear infinite; z-index:6; }
+@keyframes float { 0% { transform:translateY(0); opacity:1;} 100% { transform:translateY(-600px); opacity:0;} }
 </style>
 </head>
 <body>
@@ -132,13 +33,12 @@ button {
   <source src="music.mp3" type="audio/mp3">
 </audio>
 
-<!-- Intro Animation -->
 <div id="introAnimation">
   <div id="introTextAnim">Chunnu… something special is coming ❤️</div>
 </div>
 
-<!-- Slideshow -->
 <div class="slideshow" id="slideshow">
+  <!-- 12 images -->
   <img data-src="1.webp" class="slide active">
   <img data-src="2.webp" class="slide">
   <img data-src="3.webp" class="slide">
@@ -152,35 +52,39 @@ button {
   <img data-src="11.webp" class="slide">
   <img data-src="12.webp" class="slide">
 
-  <div class="overlay">
-    Divyesh ❤️ Divyesh<br>
-    Every moment. Every memory. Forever.
-    <br>
-    <button onclick="showSurprise()">Tap for Surprise 💍</button>
-  </div>
-
-  <div class="countdown" id="countdown"></div>
+  <div class="overlay" id="slideText"></div>
 </div>
 
-<!-- Surprise -->
 <div class="surprise" id="surpriseScreen">
   Forever with you 🥰💖
 </div>
 
 <script>
 let started = false;
+const slideTexts = [
+  "From the moment I saw you, my heart knew you were home.",
+  "Every smile of yours is a memory I want to keep forever.",
+  "With you, even the quietest moments feel like magic.",
+  "If loving you was a sport, I’d be in the Olympics… and still tripping over my own feet 😆❤️",
+  "I fall in love with you more deeply with every passing second.",
+  "Your laughter is the melody my soul dances to.",
+  "In your arms, I find the peace I’ve been searching for.",
+  "If kisses were WiFi, I’d always be connected to you 📶💋",
+  "Life with you is my favorite adventure.",
+  "You are the reason my world feels complete.",
+  "Even in silence, your love speaks to me louder than words.",
+  "Forever with you… even if you hog the blanket 😏❤️"
+];
 
-// Intro animation and lazy loading
 function startExperience(){
   if(started) return;
   started = true;
 
   const slides = document.querySelectorAll(".slide");
-  slides.forEach(slide => { slide.src = slide.dataset.src; }); // lazy load
+  slides.forEach(slide => { slide.src = slide.dataset.src; });
 
   document.getElementById("bgMusic").play();
 
-  // Hide intro after 3s and start slideshow
   setTimeout(()=>{
     document.getElementById("introAnimation").style.display="none";
     document.getElementById("slideshow").style.display="block";
@@ -188,30 +92,30 @@ function startExperience(){
   },3000);
 }
 
-// Start slideshow with smooth fade + soft zoom
 function startSlideshow(){
   const slides = document.querySelectorAll(".slide");
+  const slideTextDiv = document.getElementById("slideText");
   let index = 0;
-  setInterval(()=>{
+  slideTextDiv.innerText = slideTexts[index];
+
+  const interval = setInterval(()=>{
     slides[index].classList.remove("active");
     index = (index + 1) % slides.length;
     slides[index].classList.add("active");
+    slideTextDiv.innerText = slideTexts[index];
+
+    // Show surprise button only on last slide
+    if(index === slides.length-1){
+      const btn = document.createElement("button");
+      btn.innerText = "Tap for Surprise 💍";
+      btn.onclick = showSurprise;
+      slideTextDiv.appendChild(document.createElement("br"));
+      slideTextDiv.appendChild(btn);
+      clearInterval(interval); // stop slideshow after last slide
+    }
   },5000);
 }
 
-// Countdown to forever
-const foreverDate = new Date("February 14, 2050 00:00:00").getTime();
-setInterval(()=>{
-  const now = new Date().getTime();
-  const distance = foreverDate - now;
-  const days = Math.floor(distance / (1000*60*60*24));
-  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-  document.getElementById("countdown").innerHTML =
-    "Countdown to Forever 💍: " + days + " days " + hours + " hrs " + minutes + " mins";
-},1000);
-
-// Show surprise screen with hearts
 function showSurprise(){
   document.getElementById("slideshow").style.display="none";
   document.getElementById("surpriseScreen").style.display="flex";
@@ -221,18 +125,16 @@ function showSurprise(){
 function createHearts(){
   setInterval(()=>{
     const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.style.left = Math.random()*100+"%";
-    heart.style.fontSize = (10+Math.random()*30)+"px";
-    heart.innerHTML = "❤️";
+    heart.className="heart";
+    heart.style.left=Math.random()*100+"%";
+    heart.style.fontSize=(10+Math.random()*30)+"px";
+    heart.innerHTML="❤️";
     document.body.appendChild(heart);
     setTimeout(()=>heart.remove(),5000);
   },300);
 }
 
-// Trigger intro animation on page load
-window.onload = function() {
-  // Create floating hearts for intro
+window.onload = function(){
   const introDiv = document.getElementById("introAnimation");
   for(let i=0;i<30;i++){
     const heart = document.createElement("div");
@@ -247,13 +149,8 @@ window.onload = function() {
   startExperience();
 }
 
-// Floating hearts animation keyframes
 const style = document.createElement('style');
-style.innerHTML = `
-@keyframes float {
-  0% {transform: translateY(0); opacity:1;}
-  100% {transform: translateY(-500px); opacity:0;}
-}`;
+style.innerHTML = `@keyframes float { 0% {transform: translateY(0); opacity:1;} 100% { transform: translateY(-500px); opacity:0;} }`;
 document.head.appendChild(style);
 </script>
 </body>
